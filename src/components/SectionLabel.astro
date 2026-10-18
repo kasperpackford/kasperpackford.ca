@@ -1,0 +1,18 @@
+---
+// The small icon tile + name above each section ("Projects", "About", "Stack").
+import Icon from "./Icon.astro";
+
+interface Props {
+  icon: "grid" | "user" | "layers";
+  label: string;
+}
+
+const { icon, label } = Astro.props;
+---
+
+<div class="mb-6 flex items-center gap-3">
+  <span class="inline-flex size-8 items-center justify-center rounded-[9px] bg-accent/15 text-accent">
+    <Icon name={icon} size={16} strokeWidth={1.8} />
+  </span>
+  <span class="font-display text-base font-medium text-fg">{label}</span>
+</div>

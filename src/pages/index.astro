@@ -1,17 +1,177 @@
 ---
-import "../styles/global.css";
+// The homepage. Section order: hero, projects, about (with stack), contact.
+// Most of the wording lives right here in the HTML below.
+// Project cards:  src/data/projects.ts
+// Stack groups:   src/data/stack.ts
+// Email, links:   src/data/site.ts
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionLabel from "../components/SectionLabel.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import StackCard from "../components/StackCard.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+import { projects } from "../data/projects";
+import { stack } from "../data/stack";
+
+const facts = [
+  { label: "based in", value: "Kanata, Ottawa" },
+  { label: "from", value: "Salt Spring Island, BC" },
+  { label: "studied", value: "Algonquin College" },
+  { label: "graduated", value: "2022, Dean's Honours" },
+];
+
+const contactLinks = [
+  { label: "github", text: `${site.githubHandle} ↗`, href: site.github },
+  { label: "linkedin", text: site.linkedin ? "profile ↗" : "[add your LinkedIn]", href: site.linkedin || "#contact" },
+  { label: "résumé", text: "view →", href: site.resume },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body class="bg-neutral-950 text-white">
-  		<h1 class="text-5xl font-bold p-10">It works</h1>
-	</body>
-</html>
+<BaseLayout>
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="wrap pt-[clamp(64px,10vw,128px)] pb-[clamp(64px,9vw,112px)]">
+      <div class="flex flex-wrap items-end justify-between gap-14">
+        <div class="min-w-0 flex-[1_1_520px]">
+          <h1 class="font-display text-[clamp(52px,8vw,92px)] leading-[0.98] font-medium tracking-[-0.035em]">
+            Kasper<br />Packford<span class="text-accent">.</span>
+          </h1>
+          <p class="mt-7 max-w-[30em] text-[clamp(18px,1.6vw,20px)] leading-relaxed text-muted">
+            I build and run my own Linux server, and I've been building PCs since I was a kid. Looking for IT and tech roles around Ottawa.
+          </p>
+          <div class="mt-9">
+            <a
+              href="#projects"
+              class="inline-flex min-h-12 items-center gap-2.5 rounded-[10px] bg-accent px-[22px] font-mono text-sm font-medium text-ink transition-opacity hover:opacity-90"
+            >
+              See my projects
+              <Icon name="arrowRight" size={16} strokeWidth={1.8} />
+            </a>
+          </div>
+        </div>
+
+        <dl class="flex-[0_1_320px] rounded-2xl border border-line bg-surface px-6 py-2 font-mono text-[13px]">
+          <div class="flex justify-between gap-4 border-b border-line py-3.5">
+            <dt class="text-faint">status</dt>
+            <dd class="inline-flex items-center gap-2 text-up">
+              <span class="size-[7px] rounded-full bg-up animate-live motion-reduce:animate-none"></span>
+              open to work
+            </dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b border-line py-3.5">
+            <dt class="text-faint">based</dt>
+            <dd class="text-right">{site.location}</dd>
+          </div>
+          <div class="flex justify-between gap-4 py-3.5">
+            <dt class="text-faint">studied</dt>
+            <dd class="text-right">Algonquin College</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="border-t border-line bg-band">
+      <div class="wrap py-[clamp(72px,10vw,112px)]">
+        <SectionLabel icon="grid" label="Projects" />
+        <h2 class="font-display text-[clamp(32px,4.4vw,48px)] leading-[1.08] font-medium tracking-[-0.025em]">
+          What I'm running right now.
+        </h2>
+
+        <div class="mt-12 grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-5">
+          {projects.map((project) => <ProjectCard project={project} />)}
+        </div>
+
+        <p class="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-2 font-mono text-[12.5px] text-faint">
+          <span class="size-[7px] rounded-full bg-up animate-live motion-reduce:animate-none"></span>
+          Status is live from Uptime Kuma, running on the homelab. Checked every minute.
+        </p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="border-t border-line">
+      <div class="wrap py-[clamp(72px,10vw,112px)]">
+        <SectionLabel icon="user" label="About" />
+
+        <div class="flex flex-wrap items-start gap-x-16 gap-y-12">
+          <!-- Photo placeholder. When you have a photo, put it in public/ and swap this div for:
+               <img src="/kasper.jpg" alt="Kasper Packford" class="aspect-[4/5] w-full max-w-[300px] rounded-2xl border border-line object-cover" /> -->
+          <div class="flex aspect-[4/5] min-w-0 flex-[0_1_300px] flex-col items-center justify-center gap-3 rounded-2xl border border-line bg-surface font-mono text-xs tracking-[0.08em] text-faint">
+            <Icon name="user" size={36} strokeWidth={1.4} class="text-line-strong" />
+            [YOUR PHOTO]
+          </div>
+
+          <div class="min-w-0 flex-[1_1_520px]">
+            <h2 class="max-w-[640px] font-display text-[clamp(30px,3.8vw,42px)] leading-[1.12] font-medium tracking-[-0.025em]">
+              I learn by setting things up and keeping them running<span class="text-accent">.</span>
+            </h2>
+
+            <dl class="mt-7 grid grid-cols-[repeat(auto-fit,minmax(min(100%,140px),1fr))] gap-x-6 border-y border-line">
+              {facts.map((fact) => (
+                <div class="py-3.5">
+                  <dt class="font-mono text-[11.5px] text-faint">{fact.label}</dt>
+                  <dd class="mt-1.5 text-[15px] leading-snug">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div class="mt-7 flex max-w-[640px] flex-col gap-5 text-lg leading-[1.75] text-body">
+              <p>
+                I've built and upgraded every PC I've owned since I was a kid, built plenty for friends and family, and I'm usually the person people call when their tech stops working.
+              </p>
+              <p>
+                I studied Computer Programming at Algonquin College. These days most of my learning happens on a Linux server I run at home: setting things up, breaking them, and figuring out how to fix them.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STACK -->
+        <div id="stack" class="mt-[72px] border-t border-line pt-14">
+          <SectionLabel icon="layers" label="Stack" />
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,240px),1fr))] gap-4">
+            {stack.map((group) => <StackCard group={group} />)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="border-t border-line bg-band">
+      <div class="wrap py-[clamp(88px,12vw,144px)]">
+        <div class="flex flex-wrap items-end justify-between gap-12">
+          <div class="min-w-0 flex-[1_1_480px]">
+            <h2 class="font-display text-[clamp(44px,7vw,80px)] leading-none font-medium tracking-[-0.035em]">
+              Let's talk<span class="text-accent">.</span>
+            </h2>
+            <p class="mt-5 max-w-[32em] text-lg leading-relaxed text-muted">
+              Open to IT and tech roles in Ottawa, remote, or hybrid. Email is the best way to reach me.
+            </p>
+            <a
+              href={`mailto:${site.email}`}
+              class="mt-9 inline-flex items-center gap-3.5 border-b border-accent pb-2 text-[clamp(20px,2.6vw,28px)] [overflow-wrap:anywhere] text-fg transition-colors hover:text-white"
+            >
+              <Icon name="mail" size={24} strokeWidth={1.6} class="shrink-0 text-accent" />
+              {site.email}
+            </a>
+          </div>
+
+          <div class="min-w-0 flex-[0_1_360px] border-t border-line font-mono text-sm">
+            {contactLinks.map((link) => (
+              <a
+                href={link.href}
+                class="flex min-h-14 items-center justify-between gap-4 border-b border-line px-2 text-fg transition-colors hover:bg-surface"
+              >
+                <span class="text-faint">{link.label}</span>
+                <span>{link.text}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>

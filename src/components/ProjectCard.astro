@@ -1,0 +1,45 @@
+---
+// One project card. The content comes from src/data/projects.ts.
+// The status dot, uptime % and the thin line at the bottom are placeholders
+// until they're wired to Uptime Kuma (the data-* attributes are the hooks for that).
+import Icon from "./Icon.astro";
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const days = Array.from({ length: 30 });
+---
+
+<article
+  class="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-line bg-surface p-7 pb-8 transition duration-200 hover:-translate-y-0.5 hover:border-(--c) motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+  style={`--c: ${project.color}`}
+  data-monitor={project.monitor}
+>
+  <div class="flex items-center justify-between gap-3">
+    <span class="inline-flex size-[42px] items-center justify-center rounded-[11px] bg-(--c)/15 text-(--c)">
+      <Icon name={project.icon} />
+    </span>
+    <span class="inline-flex items-center gap-2 font-mono text-xs text-muted">
+      <span class="size-[7px] rounded-full bg-up animate-live motion-reduce:animate-none" data-status-dot></span>
+      <span data-status-text>{project.status}</span>
+      <span class="text-line-strong" aria-hidden="true">·</span>
+      <span class="text-faint" data-uptime>[99.9%]</span>
+    </span>
+  </div>
+
+  <div class="mt-1.5 flex flex-col gap-2">
+    <span class="font-mono text-[11.5px] tracking-[0.14em] text-(--c) uppercase">{project.category}</span>
+    <h3 class="font-display text-2xl font-medium tracking-[-0.015em]">{project.title}</h3>
+  </div>
+
+  <p class="grow text-base leading-relaxed text-muted">{project.description}</p>
+
+  <p class="font-mono text-[12.5px] text-faint">{project.tags.join(" · ")}</p>
+
+  <div aria-hidden="true" class="absolute inset-x-0 bottom-0 flex h-[3px] gap-px" data-history>
+    {days.map(() => <span class="flex-1 bg-up/60"></span>)}
+  </div>
+</article>

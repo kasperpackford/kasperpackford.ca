@@ -1,0 +1,33 @@
+---
+import { site } from "../data/site";
+
+const links = [
+  { href: "/#projects", label: "Projects" },
+  { href: "/#about", label: "About" },
+  { href: "/#contact", label: "Contact" },
+];
+---
+
+<header class="sticky top-0 z-20 border-b border-line bg-ink/85 backdrop-blur-md">
+  <div class="wrap flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-2 py-2.5">
+    <a href="/" class="inline-flex min-h-11 items-center gap-2.5 font-display text-[17px] font-semibold tracking-[-0.01em] text-fg">
+      <span aria-hidden="true" class="inline-flex size-[26px] items-center justify-center rounded-[7px] bg-accent text-sm font-semibold text-ink">K</span>
+      {site.name}
+    </a>
+    <nav aria-label="Main" class="flex flex-wrap items-center gap-x-6 font-mono text-[13px]">
+      {links.map((link) => (
+        <a href={link.href} class="inline-flex min-h-11 items-center text-muted transition-colors hover:text-fg">
+          {link.label}
+        </a>
+      ))}
+      <a
+        href={site.resume}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex min-h-10 items-center rounded-lg border border-line-strong px-3.5 text-fg transition-colors hover:bg-surface"
+      >
+        Résumé
+      </a>
+    </nav>
+  </div>
+</header>
