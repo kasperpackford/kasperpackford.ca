@@ -30,7 +30,7 @@ export const projects: Project[] = [
     title: "Game servers",
     category: "Hosting",
     description:
-      "Modded multiplayer servers I host for a group of friends playing across PC and Xbox.",
+      "Modded multiplayer servers I host for a group of friends playing across PC and Xbox. I run them through AMP, with each game in its own container.",
     tags: ["AMP", "containers", "networking"],
     color: "#E3A247",
     icon: "gamepad",
@@ -41,7 +41,7 @@ export const projects: Project[] = [
     title: "This site",
     category: "Web",
     description:
-      "Built with Astro and Tailwind and self-hosted on my own server. The code is public on GitHub.",
+      "Built with Astro, Tailwind, and Claude. I host it on my own server and handle the updates and changes myself.",
     tags: ["Astro", "Tailwind", "nginx", "Git"],
     color: "#B4A4E0",
     icon: "globe",

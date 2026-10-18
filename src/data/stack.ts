@@ -30,6 +30,6 @@ export const stack: StackGroup[] = [
     name: "Code and tools",
     color: "#6CC3B8",
     icon: "code",
-    items: ["Git", "SQL", "HTML", "CSS", "Java", "JavaScript", "Astro"],
+    items: ["Git", "SQL", "HTML", "CSS", "Java", "JavaScript", "Astro", "Claude"],
   },
 ];
