@@ -1,14 +1,366 @@
-<!DOCTYPE html>
-<html lang="en">   
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kasper Packford</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kasper Packford</title>
+<meta name="description" content="Kasper Packford — I build, deploy, and keep my own infrastructure running. Computer Programming grad in Kanata, Ontario.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="./output.css">
 </head>
-<body>
-    <div style="text-align: center;">
-        <h1>Kasper Packford - Site coming soon</h1>
-        <p>Friend of John Kiriakou</p>
+
+<body class="font-sans text-fg antialiased scroll-smooth">
+
+<!-- ==================== NAV ==================== -->
+<header class="sticky top-0 z-30 border-b border-line bg-ink/80 backdrop-blur">
+  <div class="mx-auto max-w-site px-6 h-14 flex items-center justify-between">
+    <a href="#top" class="font-mono text-[13px] text-fg">kasper<span class="text-mutedim">.</span>packford</a>
+    <nav class="flex items-center gap-6 font-mono text-[13px] text-mutedim">
+      <a href="#work" class="hidden sm:inline hover:text-fg transition-colors">Work</a>
+      <a href="#about" class="hidden sm:inline hover:text-fg transition-colors">About</a>
+      <a href="#contact" class="hidden sm:inline hover:text-fg transition-colors">Contact</a>
+      <a href="#" download class="rounded-md border border-line2 px-2.5 py-1.5 text-fg hover:bg-surface transition-colors">Résumé</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="mx-auto max-w-site px-6 pt-28 pb-24">
+    <div class="grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-14 items-center">
+
+      <div>
+        <div class="rise flex items-center gap-2.5 mb-6">
+          <span class="w-5 h-px bg-mutedim"></span>
+          <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-muted">Open to work</span>
+        </div>
+
+        <h1 class="rise font-display font-medium tracking-[-0.03em] leading-[1.02] text-[clamp(46px,8vw,76px)]" style="animation-delay:.08s">
+          Kasper<br>Packford
+        </h1>
+
+        <p class="rise mt-7 max-w-[420px] text-[19px] leading-relaxed text-muted" style="animation-delay:.16s">
+          I build, deploy, and keep my own infrastructure running.
+        </p>
+      </div>
+
+      <!-- identity readout -->
+      <dl class="rise lg:border-l border-line lg:pl-9 font-mono text-[13px] flex flex-col gap-4" style="animation-delay:.24s">
+        <div class="flex justify-between gap-6">
+          <dt class="text-mutedim">status</dt>
+          <dd class="flex items-center gap-2 text-up"><span class="dot relative w-1.5 h-1.5 rounded-full bg-up"></span>available</dd>
+        </div>
+        <div class="flex justify-between gap-6">
+          <dt class="text-mutedim">based</dt><dd>Kanata, ON</dd>
+        </div>
+        <div class="flex justify-between gap-6">
+          <dt class="text-mutedim">studied</dt><dd>Algonquin College</dd>
+        </div>
+        <div class="flex justify-between gap-6">
+          <dt class="text-mutedim">seeking</dt><dd>IT &amp; tech roles</dd>
+        </div>
+      </dl>
+
     </div>
+  </section>
+
+  <!-- ==================== WORK ==================== -->
+  <section id="work" class="scroll-mt-14 border-t border-line bg-band">
+    <div class="mx-auto max-w-site px-6 py-24">
+
+      <div class="flex items-center gap-2.5 mb-6">
+        <span class="w-5 h-px bg-mutedim"></span>
+        <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-muted">Work</span>
+      </div>
+      <h2 class="font-display font-medium tracking-[-0.025em] text-[clamp(30px,4.6vw,44px)] leading-[1.1] max-w-[620px]">
+        Things I've built, and what they taught me.
+      </h2>
+      <p class="mt-5 max-w-[520px] text-[17px] leading-relaxed text-muted">
+        Each one is something I built end to end, put in front of real users, and still maintain.
+      </p>
+
+      <!-- ---------- EXPANDED PROJECT (reusable template) ----------
+           Any project can use this treatment. Copy the whole <article>
+           for the next one that deserves a full writeup. Projects that
+           don't need it use the small card pattern further down. -->
+      <article class="mt-16 rounded-2xl border border-line bg-surface overflow-hidden">
+
+        <!-- header -->
+        <div class="flex flex-wrap items-baseline justify-between gap-4 px-6 sm:px-8 pt-7 pb-6 border-b border-line">
+          <div>
+            <div class="font-mono text-[11px] tracking-[0.14em] uppercase text-mutedim mb-2">Infrastructure</div>
+            <h3 class="font-display font-medium text-[26px] tracking-[-0.02em]">Homelab server</h3>
+          </div>
+          <div class="font-mono text-[12px] text-muted flex items-center gap-2">
+            <span class="dot relative w-1.5 h-1.5 rounded-full bg-up"></span>running since 2024
+          </div>
+        </div>
+
+        <!-- live status strip (placeholder data for now) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 border-b border-line divide-x divide-line" id="metrics">
+          <div class="px-6 sm:px-8 py-5">
+            <div class="font-mono text-[11px] text-mutedim mb-2">uptime</div>
+            <div class="font-mono text-[15px]" id="uptime">--</div>
+          </div>
+          <div class="px-6 sm:px-8 py-5">
+            <div class="font-mono text-[11px] text-mutedim mb-2">services</div>
+            <div class="font-mono text-[15px]">7 containers</div>
+          </div>
+          <div class="px-6 sm:px-8 py-5">
+            <div class="flex justify-between font-mono text-[11px] text-mutedim mb-2"><span>memory</span><span>41%</span></div>
+            <div class="h-1 rounded-full bg-ink overflow-hidden"><div class="bar h-full bg-mutedim rounded-full w-0" data-w="41%"></div></div>
+          </div>
+          <div class="px-6 sm:px-8 py-5">
+            <div class="flex justify-between font-mono text-[11px] text-mutedim mb-2"><span>disk</span><span>63%</span></div>
+            <div class="h-1 rounded-full bg-ink overflow-hidden"><div class="bar h-full bg-mutedim rounded-full w-0" data-w="63%"></div></div>
+          </div>
+        </div>
+
+        <!-- body -->
+        <div class="grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-10 px-6 sm:px-8 py-9">
+
+          <div class="flex flex-col gap-6 text-[16px] leading-relaxed text-muted">
+            <p>
+              I wanted to understand Linux properly, so I stopped reading about it and built a box that other
+              people depend on. It runs <span class="text-fg">Ubuntu 24.04</span> on a Ryzen 5 4600G with 44GB of
+              RAM, and everything on it is something I set up, broke at least once, and fixed.
+            </p>
+            <p>
+              Today it handles DNS-level ad blocking for the whole house, monitors itself, backs up my password
+              vault on a schedule, and hosts game servers for a group of friends who notice immediately when
+              anything is down. Remote access runs over Tailscale so nothing is exposed to the open internet.
+            </p>
+
+            <div>
+              <div class="font-mono text-[11px] tracking-[0.14em] uppercase text-mutedim mb-3">What I learned the hard way</div>
+              <p>
+                My nightly Bitwarden backup kept failing silently. The Bitwarden CLI is installed as a snap, and
+                snap confinement meant it simply could not write to the path I had chosen under <code class="font-mono text-[14px] text-fg">/opt</code>.
+                Nothing errored loudly, the backups just were not there. Moving the target into my home directory
+                fixed it. The real lesson was that a backup you have never restored from is not a backup, so now I
+                check it.
+              </p>
+            </div>
+          </div>
+
+          <!-- spec rail -->
+          <div class="lg:border-l border-line lg:pl-8 flex flex-col gap-7">
+            <div>
+              <div class="font-mono text-[11px] tracking-[0.14em] uppercase text-mutedim mb-3">Running on it</div>
+              <ul class="flex flex-col gap-2 font-mono text-[13px] text-muted">
+                <li>Pi-hole</li><li>Netdata</li><li>Uptime Kuma</li>
+                <li>AMP game servers</li><li>Tailscale</li>
+              </ul>
+            </div>
+            <div>
+              <div class="font-mono text-[11px] tracking-[0.14em] uppercase text-mutedim mb-3">Managed with</div>
+              <ul class="flex flex-col gap-2 font-mono text-[13px] text-muted">
+                <li>SSH / Termius</li><li>tmux</li><li>cron</li><li>Docker</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ---------- SMALLER PROJECTS ---------- -->
+      <div class="mt-6 grid sm:grid-cols-3 gap-6">
+
+        <!-- copy this <article> to add a project -->
+        <article class="rounded-2xl border border-line bg-surface p-6 flex flex-col gap-3 hover:border-line2 hover:bg-surface2 transition-colors">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display font-medium text-[18px]">Game servers</h3>
+            <span class="dot relative w-1.5 h-1.5 rounded-full bg-up"></span>
+          </div>
+          <p class="text-[15px] leading-relaxed text-muted flex-1">
+            Modded servers for a group of friends across Steam, PC Game Pass, and Xbox console. Real users who
+            notice downtime.
+          </p>
+          <div class="font-mono text-[12px] text-mutedim">AMP · Docker · networking</div>
+        </article>
+
+        <article class="rounded-2xl border border-line bg-surface p-6 flex flex-col gap-3 hover:border-line2 hover:bg-surface2 transition-colors">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display font-medium text-[18px]">This site</h3>
+            <span class="dot relative w-1.5 h-1.5 rounded-full bg-up"></span>
+          </div>
+          <p class="text-[15px] leading-relaxed text-muted flex-1">
+            Hand-built and self-hosted, no template. Served from the same machine as everything else here.
+          </p>
+          <div class="font-mono text-[12px] text-mutedim">HTML · Tailwind · static</div>
+        </article>
+
+        <a href="#" class="rounded-2xl border border-dashed border-line p-6 flex items-center justify-center font-mono text-[13px] text-mutedim hover:text-fg hover:border-line2 transition-colors min-h-[150px]">
+          + next project
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about" class="scroll-mt-14 border-t border-line">
+    <div class="mx-auto max-w-site px-6 py-24">
+
+      <div class="flex items-center gap-2.5 mb-6">
+        <span class="w-5 h-px bg-mutedim"></span>
+        <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-muted">About</span>
+      </div>
+
+      <div class="grid lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)] gap-12">
+
+        <!-- photo + quick facts -->
+        <div class="flex flex-col gap-7">
+          <div class="aspect-[4/5] rounded-xl border border-line bg-surface flex items-center justify-center font-mono text-[12px] text-mutedim">
+            photo
+          </div>
+          <dl class="flex flex-col gap-3 font-mono text-[12.5px] border-t border-line pt-5">
+            <div class="flex justify-between gap-4"><dt class="text-mutedim">based in</dt><dd>Kanata, ON</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mutedim">from</dt><dd>Salt Spring Island, BC</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-mutedim">focus</dt><dd>IT / systems</dd></div>
+          </dl>
+        </div>
+
+        <!-- bio -->
+        <div>
+          <h2 class="font-display font-medium tracking-[-0.025em] text-[clamp(26px,3.6vw,36px)] leading-[1.15] max-w-[620px]">
+            I learn things by running them, not by reading about them.
+          </h2>
+
+          <div class="mt-7 flex flex-col gap-5 text-[17px] leading-relaxed text-muted max-w-[640px]">
+            <p>
+              I graduated from the Computer Programming program at Algonquin College with Dean's Honours, and
+              somewhere in there I figured out that I learn a lot faster when something is actually at stake.
+              So I built a server, put things on it that people rely on, and became the person who has to fix it.
+            </p>
+            <p>
+              That is most of what I do now. When I want to understand a tool, I deploy it, break it, and keep it
+              alive. It has taught me more about Linux, networking, and backups than any course did, mostly because
+              a course never wakes you up to tell you DNS is down for the entire house.
+            </p>
+            <p>
+              I am looking for an IT or tech role in the Ottawa area where I can do that kind of hands-on work
+              for a team instead of just for myself.
+            </p>
+          </div>
+
+          <!-- now -->
+          <div class="mt-10">
+            <div class="font-mono text-[11px] tracking-[0.18em] uppercase text-mutedim mb-4">Now</div>
+            <ul class="flex flex-col gap-3">
+              <li class="flex gap-3.5 items-baseline text-[16px] text-muted"><span class="w-3 h-px bg-line2 flex-none translate-y-[-4px]"></span>Studying for my first IT certification</li>
+              <li class="flex gap-3.5 items-baseline text-[16px] text-muted"><span class="w-3 h-px bg-line2 flex-none translate-y-[-4px]"></span>Planning a Proxmox rebuild of the homelab</li>
+              <li class="flex gap-3.5 items-baseline text-[16px] text-muted"><span class="w-3 h-px bg-line2 flex-none translate-y-[-4px]"></span>Learning guitar, badly but persistently</li>
+            </ul>
+          </div>
+
+          <!-- education + stack -->
+          <div class="mt-14 grid sm:grid-cols-2 gap-10 border-t border-line pt-10">
+            <div>
+              <div class="font-mono text-[11px] tracking-[0.18em] uppercase text-mutedim mb-4">Education</div>
+              <div class="text-[17px]">Computer Programming</div>
+              <div class="font-mono text-[13px] text-muted mt-1.5">Algonquin College · Dean's Honours</div>
+              <!-- certifications slot in right here when you earn one -->
+            </div>
+            <div>
+              <div class="font-mono text-[11px] tracking-[0.18em] uppercase text-mutedim mb-4">Tools I reach for</div>
+              <div class="flex flex-wrap gap-2 font-mono text-[12.5px]">
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">Linux</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">Docker</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">Bash</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">Java</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">JavaScript</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">SQL</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">Git</span>
+                <span class="rounded-md border border-line bg-surface px-2.5 py-1.5">Networking</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact" class="scroll-mt-14 border-t border-line bg-band">
+    <div class="mx-auto max-w-site px-6 py-24">
+
+      <div class="flex items-center gap-2.5 mb-6">
+        <span class="w-5 h-px bg-mutedim"></span>
+        <span class="font-mono text-[11px] tracking-[0.18em] uppercase text-muted">Contact</span>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <h2 class="font-display font-medium tracking-[-0.025em] text-[clamp(30px,4.6vw,44px)] leading-[1.1]">
+            Let's talk.
+          </h2>
+          <p class="mt-5 max-w-[400px] text-[17px] leading-relaxed text-muted">
+            Open to IT and tech roles around Ottawa. Email is the fastest way to reach me.
+          </p>
+        </div>
+
+        <div class="flex flex-col divide-y divide-line border-y border-line font-mono text-[14px]">
+          <a href="mailto:you@kasperpackford.ca" class="flex items-center justify-between gap-6 py-4 hover:bg-surface px-1 transition-colors">
+            <span class="text-mutedim">email</span><span>you@kasperpackford.ca</span>
+          </a>
+          <a href="#" target="_blank" rel="noopener" class="flex items-center justify-between gap-6 py-4 hover:bg-surface px-1 transition-colors">
+            <span class="text-mutedim">github</span><span>github.com/you ↗</span>
+          </a>
+          <a href="#" target="_blank" rel="noopener" class="flex items-center justify-between gap-6 py-4 hover:bg-surface px-1 transition-colors">
+            <span class="text-mutedim">linkedin</span><span>in/you ↗</span>
+          </a>
+          <a href="#" download class="flex items-center justify-between gap-6 py-4 hover:bg-surface px-1 transition-colors">
+            <span class="text-mutedim">résumé</span><span>download PDF ↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t border-line">
+  <div class="mx-auto max-w-site px-6 py-7 flex flex-wrap gap-3 justify-between font-mono text-[12px] text-mutedim">
+    <span>© 2026 Kasper Packford</span>
+    <span>built and self-hosted</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var el = document.getElementById('uptime');
+    if (!el) return;
+    var since = new Date('2026-05-02T09:20:00');
+    function tick() {
+      var s = Math.floor((Date.now() - since) / 1000);
+      var d = Math.floor(s / 86400); s %= 86400;
+      var h = String(Math.floor(s / 3600)).padStart(2, '0'); s %= 3600;
+      var m = String(Math.floor(s / 60)).padStart(2, '0');
+      el.textContent = d + 'd ' + h + ':' + m;
+    }
+    tick(); setInterval(tick, 30000);
+  })();
+
+  (function () {
+    var bars = document.querySelectorAll('.bar');
+    function fill() { bars.forEach(function (b) { b.style.width = b.dataset.w; }); }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return fill();
+    var box = document.getElementById('metrics');
+    if (!box) return fill();
+    var io = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { fill(); io.disconnect(); }
+    }, { threshold: 0.3 });
+    io.observe(box);
+  })();
+</script>
+
 </body>
 </html>
