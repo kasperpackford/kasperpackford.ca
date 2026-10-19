@@ -1,0 +1,149 @@
+---
+// One project card. The content comes from src/data/projects.ts.
+// The live status (dot, text, uptime %, the thin bars along the bottom) starts
+// out as a grey "Checking" state, then the script at the bottom fills it in
+// with real data from Uptime Kuma. If that data can't be loaded, it's hidden.
+import Icon from "./Icon.astro";
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const bars = Array.from({ length: 30 });
+const live = project.monitor !== undefined;
+---
+
+<article
+  class="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-line bg-surface p-7 pb-8 transition duration-200 hover:-translate-y-0.5 hover:border-(--c) motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+  style={`--c: ${project.color}`}
+  data-monitor={project.monitor}
+  data-label={project.status}
+>
+  <div class="flex items-center justify-between gap-3">
+    <span class="inline-flex size-[42px] items-center justify-center rounded-[11px] bg-(--c)/15 text-(--c)">
+      <Icon name={project.icon} />
+    </span>
+    {live && (
+      <span class="inline-flex items-center gap-2 font-mono text-xs text-muted" data-status>
+        <span class="size-[7px] rounded-full bg-faint" data-status-dot></span>
+        <span data-status-text>Checking</span>
+        <span class="text-line-strong" aria-hidden="true" hidden data-uptime-sep>·</span>
+        <span class="text-faint" title="Uptime over the last 24 hours" hidden data-uptime></span>
+      </span>
+    )}
+  </div>
+
+  <div class="mt-1.5 flex flex-col gap-2">
+    <span class="font-mono text-[11.5px] tracking-[0.14em] text-(--c) uppercase">{project.category}</span>
+    <h3 class="font-display text-2xl font-medium tracking-[-0.015em]">{project.title}</h3>
+  </div>
+
+  <p class="grow text-base leading-relaxed text-muted">{project.description}</p>
+
+  <p class="font-mono text-[12.5px] text-faint">{project.tags.join(" · ")}</p>
+
+  {live && (
+    <div aria-hidden="true" class="absolute inset-x-0 bottom-0 flex h-[3px] gap-px" data-history>
+      {bars.map(() => <span class="flex-1 bg-line"></span>)}
+    </div>
+  )}
+</article>
+
+<script>
+  // Fills in the live status on every project card.
+  // Astro only includes this script once, no matter how many cards there are.
+  //
+  // The data comes from /api/status, which nginx passes through from Uptime Kuma:
+  //   heartbeatList: { "1": [ { status: 1, time: "...", ping: 84 }, ... ] }   last 100 checks, oldest first
+  //   uptimeList:    { "1_24": 0.9993 }                                         24-hour uptime, 0 to 1
+  // The numbers ("1") are the monitor IDs you put in projects.ts.
+  //
+  // Kuma status codes: 0 = down, 1 = up, 2 = pending, 3 = maintenance.
+  // The class names are written out in full on purpose: Tailwind only creates
+  // classes it can find spelled out somewhere in your files.
+  const STATES: Record<number, { text: string | null; dot: string; bar: string }> = {
+    0: { text: "Down", dot: "bg-down", bar: "bg-down/70" },
+    1: { text: null, dot: "bg-up animate-live motion-reduce:animate-none", bar: "bg-up/60" },
+    2: { text: "Pending", dot: "bg-warn", bar: "bg-warn/70" },
+    3: { text: "Maintenance", dot: "bg-accent", bar: "bg-accent/60" },
+  };
+  // text: null means "use the card's own label from projects.ts" (like "Online" or "Live").
+
+  type KumaData = {
+    heartbeatList: Record<string, { status: number }[]>;
+    uptimeList: Record<string, number>;
+  };
+
+  // 0.9993 -> "99.9%". Rounds down, so 99.99% never shows as a fake 100%.
+  function formatUptime(ratio: number) {
+    if (ratio >= 1) return "100%";
+    return `${(Math.floor(ratio * 1000) / 10).toFixed(1)}%`;
+  }
+
+  // Show or hide a card's live bits (and the note under the cards).
+  function setVisible(card: HTMLElement, visible: boolean) {
+    card.querySelectorAll<HTMLElement>("[data-status], [data-history]").forEach((el) => (el.hidden = !visible));
+  }
+
+  async function updateStatus() {
+    const cards = [...document.querySelectorAll<HTMLElement>("[data-monitor]")];
+    const note = document.querySelector<HTMLElement>("[data-status-note]");
+    if (!cards.length) return;
+
+    let data: KumaData;
+    try {
+      const res = await fetch("/api/status", { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      data = await res.json();
+    } catch {
+      // Couldn't reach Kuma: hide the live bits rather than show old or made-up data.
+      cards.forEach((card) => setVisible(card, false));
+      if (note) note.hidden = true;
+      return;
+    }
+
+    for (const card of cards) {
+      const id = card.dataset.monitor!;
+      const beats = data.heartbeatList[id] ?? [];
+      const latest = beats.at(-1);
+
+      // No data for this ID (wrong number in projects.ts, or the monitor was deleted)
+      if (!latest) {
+        setVisible(card, false);
+        continue;
+      }
+      setVisible(card, true);
+
+      const state = STATES[latest.status] ?? STATES[2];
+      card.querySelector("[data-status-dot]")!.className = `size-[7px] rounded-full ${state.dot}`;
+      card.querySelector("[data-status-text]")!.textContent = state.text ?? card.dataset.label ?? "Online";
+
+      const uptime = data.uptimeList[`${id}_24`];
+      const uptimeEl = card.querySelector<HTMLElement>("[data-uptime]")!;
+      const sepEl = card.querySelector<HTMLElement>("[data-uptime-sep]")!;
+      if (uptime !== undefined) {
+        uptimeEl.textContent = formatUptime(uptime);
+        uptimeEl.hidden = sepEl.hidden = false;
+      }
+
+      // The bars: the last 30 checks, newest on the right. Grey if there aren't 30 yet.
+      const bars = card.querySelectorAll<HTMLElement>("[data-history] > span");
+      const recent = beats.slice(-bars.length);
+      const offset = bars.length - recent.length;
+      bars.forEach((bar, i) => {
+        const beat = recent[i - offset];
+        bar.className = `flex-1 ${beat ? (STATES[beat.status] ?? STATES[2]).bar : "bg-line"}`;
+      });
+    }
+
+    if (note) note.hidden = false;
+  }
+
+  updateStatus();
+  // Refresh every minute (Kuma checks every minute), but not while the tab is in the background.
+  setInterval(() => {
+    if (!document.hidden) updateStatus();
+  }, 60_000);
+</script>

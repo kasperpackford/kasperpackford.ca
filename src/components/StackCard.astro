@@ -1,0 +1,28 @@
+---
+// One group in the Stack section. Content comes from src/data/stack.ts.
+import Icon from "./Icon.astro";
+import type { StackGroup } from "../data/stack";
+
+interface Props {
+  group: StackGroup;
+}
+
+const { group } = Astro.props;
+---
+
+<div
+  class="flex flex-col gap-4 rounded-[14px] border border-line bg-surface p-[22px] transition duration-200 hover:-translate-y-0.5 hover:border-(--c) motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+  style={`--c: ${group.color}`}
+>
+  <div class="flex items-center gap-3">
+    <span class="inline-flex size-9 items-center justify-center rounded-[10px] bg-(--c)/15 text-(--c)">
+      <Icon name={group.icon} size={18} />
+    </span>
+    <span class="font-display text-[17px] font-medium">{group.name}</span>
+  </div>
+  <ul class="flex flex-wrap gap-1.5">
+    {group.items.map((item) => (
+      <li class="rounded-md bg-raised px-2.5 py-1.5 font-mono text-[12.5px] text-body">{item}</li>
+    ))}
+  </ul>
+</div>

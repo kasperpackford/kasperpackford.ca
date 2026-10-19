@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/*
+  Design tokens. Everything in @theme becomes a Tailwind class:
+    --color-accent   ->  bg-accent, text-accent, border-accent
+    --font-display   ->  font-display
+    --animate-live   ->  animate-live
+  Change a value here and it changes everywhere on the site.
+*/
+@theme {
+  --color-ink: #0D0E10;          /* page background */
+  --color-band: #111215;         /* alternate section background */
+  --color-surface: #16171B;      /* cards */
+  --color-raised: #1C1E23;       /* chips, hover */
+  --color-line: #25272C;         /* borders */
+  --color-line-strong: #30333A;  /* button borders */
+  --color-faint: #808188;        /* small labels */
+  --color-muted: #9A9BA1;        /* secondary text */
+  --color-body: #C8C9CD;         /* paragraphs */
+  --color-fg: #ECECEA;           /* headings, main text */
+  --color-up: #8FBF7F;           /* status green, only for "online" */
+  --color-down: #E06C6C;         /* status red, only for "down" */
+  --color-warn: #E3A247;         /* status amber, only for "pending" */
+  --color-accent: #7FA9D8;       /* the one accent color */
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --animate-live: live 2.4s ease-out infinite;
+
+  @keyframes live {
+    0% { box-shadow: 0 0 0 0 rgb(143 191 127 / 0.5); }
+    70% { box-shadow: 0 0 0 7px rgb(143 191 127 / 0); }
+    100% { box-shadow: 0 0 0 0 rgb(143 191 127 / 0); }
+  }
+}
+
+/* Page width and side padding, used by every section: class="wrap" */
+@utility wrap {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink font-sans text-fg antialiased;
+  }
+
+  /* keeps headings from hiding under the sticky header when you jump to #about etc. */
+  [id] {
+    scroll-margin-top: 80px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-fg);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
