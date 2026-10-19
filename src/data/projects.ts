@@ -24,7 +24,7 @@ export const projects: Project[] = [
     color: "#7FA9D8",
     icon: "server",
     status: "Online",
-    monitor: "homelab",
+    monitor: "5",
   },
   {
     title: "Game servers",
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     color: "#E3A247",
     icon: "gamepad",
     status: "Online",
-    monitor: "amp-panel",
+    monitor: "2",
   },
   {
     title: "This site",
@@ -46,6 +46,6 @@ export const projects: Project[] = [
     color: "#B4A4E0",
     icon: "globe",
     status: "Live",
-    monitor: "website",
+    monitor: "1",
   },
 ];

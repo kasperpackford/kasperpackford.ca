@@ -83,9 +83,9 @@ const contactLinks = [
           {projects.map((project) => <ProjectCard project={project} />)}
         </div>
 
-        <p class="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-2 font-mono text-[12.5px] text-faint">
+        <p class="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-2 font-mono text-[12.5px] text-faint" hidden data-status-note>
           <span class="size-[7px] rounded-full bg-up animate-live motion-reduce:animate-none"></span>
-          Status is live from Uptime Kuma, running on the homelab. Checked every minute.
+          Live from Uptime Kuma on the homelab. Uptime is the last 24 hours, bars are the last 30 checks.
         </p>
       </div>
     </section>

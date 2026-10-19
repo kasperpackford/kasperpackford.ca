@@ -19,6 +19,8 @@
   --color-body: #C8C9CD;         /* paragraphs */
   --color-fg: #ECECEA;           /* headings, main text */
   --color-up: #8FBF7F;           /* status green, only for "online" */
+  --color-down: #E06C6C;         /* status red, only for "down" */
+  --color-warn: #E3A247;         /* status amber, only for "pending" */
   --color-accent: #7FA9D8;       /* the one accent color */
 
   --font-display: "Space Grotesk", sans-serif;

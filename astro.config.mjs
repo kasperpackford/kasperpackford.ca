@@ -1,11 +1,15 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 
-import tailwindcss from '@tailwindcss/vite';
-
-// https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+    server: {
+      // When you run "npm run dev", borrow the live status from the real site
+      // so the project cards work on your PC too. Only affects dev, not the build.
+      proxy: {
+        "/api/status": { target: "https://kasperpackford.ca", changeOrigin: true },
+      },
+    },
+  },
 });
